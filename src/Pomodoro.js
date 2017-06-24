@@ -7,9 +7,11 @@ function Timer(props) {
 	);
 }
 
-function Control(props) {
+function Controller(props) {
 	return (
-		<div className="controls">
+		<div className="controller">
+			<button onClick={props.handleOnClickStart}>Start</button>
+			<button onClick={props.handleOnClickSkip}>Skip</button>
 		</div>
 	);
 }
@@ -19,11 +21,14 @@ class Pomodoro extends Component {
 		super(props);
 
 		this.state = {
-			enable: true,
+			enable: false,
+			isWorkInteral: true,
 			timeRemaining: this.getTimeRemaining(WORKING_TIME),
 		};
 		this.tick = this.tick.bind(this);
 		this.getTimeRemaining = this.getTimeRemaining.bind(this);
+		this.handleStartTimer = this.handleStartTimer.bind(this);
+		this.handleSkipTimer = this.handleSkipTimer.bind(this);
 		setInterval(this.tick, 1000);
 	}
 
@@ -34,7 +39,18 @@ class Pomodoro extends Component {
 				this.setState({timeRemaining: timeRemaining});
 			}
 		}
+	}
 
+	handleStartTimer() {
+		this.setState(prevState => ({enable: !prevState.enable}));
+	}
+
+	handleSkipTimer() {
+		this.setState(prevState => ({
+			enable: false,
+			isWorkInteral: !prevState.isWorkInteral,
+			timeRemaining: this.getTimeRemaining(!prevState.isWorkInteral ? WORKING_TIME : BREAK_TIME)
+		}));
 	}
 
 	getTimeRemaining(timeInSecs) {
@@ -52,6 +68,10 @@ class Pomodoro extends Component {
 			<div>
 				<h1>Hello!</h1>
 				<Timer time={this.state.timeRemaining}/>
+				<Controller
+					handleOnClickStart={this.handleStartTimer}
+					handleOnClickSkip={this.handleSkipTimer}
+				/>
 			</div>
 		);
 	}
