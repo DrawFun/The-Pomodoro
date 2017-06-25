@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Pomodoro.css'
 import { WORKING_TIME, BREAK_TIME, TEST_INTERVAL_TIME, TOTAL_TASK_NUM } from './const';
 
 function TaskPanel(props) {

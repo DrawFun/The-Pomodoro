@@ -1,0 +1,38 @@
+button {
+	border: none;
+	background: transparent;
+	color: #000;
+	cursor: pointer;
+	font-size: 3rem;
+	text-transform: uppercase;
+	padding: 8px;
+	letter-spacing: 2px;
+	font-family: inherit;
+}
+
+button:focus {
+	outline: none;
+}
+
+.controller {
+	width: 400px;
+	margin: auto;
+	display: flex;
+	justify-content: space-between;
+}
+
+.taskpanel {
+	width: 300px;
+	margin: auto;
+	font-size: 3rem;
+	color: black;
+	font-weight: bolder;
+}
+
+.timer {
+	width: 400px;
+	margin: auto;
+	font-size: 10rem;
+	color: black;
+	font-weight: lighter; 
+}
