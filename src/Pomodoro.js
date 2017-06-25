@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import './Pomodoro.css'
-import { WORKING_TIME, BREAK_TIME, TEST_INTERVAL_TIME, TOTAL_TASK_NUM } from './const';
+import { WORKING_TIME, BREAK_TIME, TOTAL_TASK_NUM } from './const';
 
 function TaskPanel(props) {
 	return (
@@ -39,6 +40,7 @@ class Pomodoro extends Component {
 		this.getTimeRemaining = this.getTimeRemaining.bind(this);
 		this.handleStartTimer = this.handleStartTimer.bind(this);
 		this.handleSkipTimer = this.handleSkipTimer.bind(this);
+		this.handlePushNotification = this.handlePushNotification.bind(this);
 		setInterval(this.tick, 1000);
 	}
 
@@ -49,7 +51,7 @@ class Pomodoro extends Component {
 				this.setState({timeRemaining: timeRemaining});
 			} else {
 				this.completedCurrentTimer();
-				this.skipCurrentTimer();
+				this.skipCurrentTimer(false);
 			}
 		}
 	}
@@ -59,14 +61,24 @@ class Pomodoro extends Component {
 			const completed = this.state.completed + 1;
 			this.setState({completed: completed});
 		}
+		this.handlePushNotification();
 	}
 
-	skipCurrentTimer() {
-		this.setState({
-			enable: false,
-			isWorkInteral: true,
-			timeRemaining: this.getTimeRemaining(WORKING_TIME)
-		});		
+	skipCurrentTimer(resetWorkState) {
+		if (resetWorkState) {
+			this.setState({
+				enable: false,
+				isWorkInteral: true,
+				timeRemaining: this.getTimeRemaining(WORKING_TIME)
+			});					
+		} else {
+			this.setState(prevState => ({
+				enable: false,
+				isWorkInteral: !prevState.isWorkInteral,
+				timeRemaining: this.getTimeRemaining(!prevState.isWorkInteral ? WORKING_TIME : BREAK_TIME)
+			}));		
+		}
+
 	}
 
 	handleStartTimer() {
@@ -74,7 +86,10 @@ class Pomodoro extends Component {
 	}
 
 	handleSkipTimer() {
-		this.skipCurrentTimer();
+		this.skipCurrentTimer(true);
+	}
+
+	handlePushNotification() {
 	}
 
 	getTimeRemaining(timeInSecs) {
