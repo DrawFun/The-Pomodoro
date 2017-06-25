@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import './Pomodoro.css'
+import './Pomodoro.css';
 import { WORKING_TIME, BREAK_TIME, TOTAL_TASK_NUM } from './const';
 
 function TaskPanel(props) {
@@ -90,6 +90,7 @@ class Pomodoro extends Component {
 	}
 
 	handlePushNotification() {
+		
 	}
 
 	getTimeRemaining(timeInSecs) {
