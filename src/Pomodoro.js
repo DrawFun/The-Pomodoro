@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './Pomodoro.css';
 import { WORKING_TIME, BREAK_TIME, TOTAL_TASK_NUM } from './const';
+import Push from 'push.js';
 
 function TaskPanel(props) {
 	return (
@@ -90,7 +91,13 @@ class Pomodoro extends Component {
 	}
 
 	handlePushNotification() {
-		
+		var text = "world";
+		var x = false;
+		const title = "Time to " + (!this.state.isWorkInteral ? "work!" : "rest!");
+		Push.create(title, {
+			icon: 'cat.png',
+			timeout: 5000,
+		});
 	}
 
 	getTimeRemaining(timeInSecs) {
